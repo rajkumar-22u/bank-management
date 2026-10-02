@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bank Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            🏦 UBI
+        </div>
+
+        <div class="nav-buttons">
+            <button onclick="showSection('home')">Home</button>
+            <button onclick="showSection('create')">Create Account</button>
+            <button onclick="showSection('login')">Customer Login</button>
+            <button onclick="showSection('adminLogin')">Admin</button>
+        </div>
+
+    </nav>
+
+
+    <!-- HOME -->
+    <section id="home" class="section active">
+
+        <div class="hero">
+
+            <div class="hero-text">
+
+                <h1>Welcome to UBI</h1>
+
+                <p>
+                    Simple, Secure and Easy Banking Management System
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button
+                        class="primary-btn"
+                        onclick="showSection('create')">
+                        Create Account
+                    </button>
+
+                    <button
+                        class="secondary-btn"
+                        onclick="showSection('login')">
+                        Customer Login
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="features">
+
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>Easy Account</h3>
+                <p>Create your bank account easily.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Deposit</h3>
+                <p>Deposit money into your account.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💸</div>
+                <h3>Withdraw</h3>
+                <p>Withdraw money whenever required.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Transactions</h3>
+                <p>Check your complete transaction history.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CREATE ACCOUNT -->
+    <section id="create" class="section">
+
+        <div class="form-container">
+
+            <h2>📝 Create New Account</h2>
+
+            <p class="form-subtitle">
+                Create your account and choose your own 4-digit PIN.
+            </p>
+
+            <form id="createForm">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name"
+                    required>
+
+
+                <label>Mobile Number</label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter 10-digit mobile number"
+                    maxlength="10"
+                    required>
+
+
+                <label>Create PIN</label>
+
+                <input
+                    type="password"
+                    id="pin"
+                    placeholder="Create 4-digit PIN"
+                    maxlength="4"
+                    inputmode="numeric"
+                    required>
+
+
+                <label>Confirm PIN</label>
+
+                <input
+                    type="password"
+                    id="confirmPin"
+                    placeholder="Confirm your PIN"
+                    maxlength="4"
+                    inputmode="numeric"
+                    required>
+
+
+                <label>Initial Deposit</label>
+
+                <input
+                    type="number"
+                    id="deposit"
+                    placeholder="Enter initial deposit"
+                    min="0"
+                    step="0.01"
+                    required>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn full-btn">
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <div id="createMessage" class="message"></div>
+
+
+            <!-- ACCOUNT CREATED -->
+            <div
+                id="accountCreated"
+                class="account-created hidden">
+
+                <h3>🎉 Account Created Successfully!</h3>
+
+                <p>Your Account Number is:</p>
+
+                <div
+                    id="newAccountNumber"
+                    class="account-number">
+                </div>
+
+                <p>
+                    Please remember your Account Number and PIN.
+                </p>
+
+                <button
+                    class="primary-btn"
+                    onclick="showSection('login')">
+                    Go to Login
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CUSTOMER LOGIN -->
+    <section id="login" class="section">
+
+        <div class="form-container login-box">
+
+            <h2>🔐 Customer Login</h2>
+
+            <p class="form-subtitle">
+                Login using your Account Number and PIN.
+            </p>
+
+            <form id="loginForm">
+
+                <label>Account Number</label>
+
+                <input
+                    type="text"
+                    id="loginAccount"
+                    placeholder="Example: AC100001"
+                    required>
+
+
+                <label>PIN</label>
+
+                <input
+                    type="password"
+                    id="loginPin"
+                    placeholder="Enter 4-digit PIN"
+                    maxlength="4"
+                    inputmode="numeric"
+                    required>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn full-btn">
+                    Login
+                </button>
+
+            </form>
+
+            <div id="loginMessage" class="message"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CUSTOMER DASHBOARD -->
+    <section id="dashboard" class="section">
+
+        <div class="dashboard-container">
+
+            <div class="dashboard-header">
+
+                <div>
+                    <h2>👋 Welcome, <span id="customerName"></span></h2>
+
+                    <p>
+                        Account:
+                        <strong id="customerAccount"></strong>
+                    </p>
+                </div>
+
+                <button
+                    class="logout-btn"
+                    onclick="logout()">
+                    Logout
+                </button>
+
+            </div>
+
+
+            <!-- BALANCE -->
+            <div class="balance-card">
+
+                <p>Available Balance</p>
+
+                <h1>
+                    ₹ <span id="balance">0.00</span>
+                </h1>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+            <div class="action-grid">
+
+                <!-- DEPOSIT -->
+                <div class="action-card">
+
+                    <div class="action-icon">💰</div>
+
+                    <h3>Deposit Money</h3>
+
+                    <input
+                        type="number"
+                        id="depositAmount"
+                        placeholder="Enter amount"
+                        min="1"
+                        step="0.01">
+
+                    <button
+                        class="deposit-btn"
+                        onclick="depositMoney()">
+                        Deposit
+                    </button>
+
+                </div>
+
+
+                <!-- WITHDRAW -->
+                <div class="action-card">
+
+                    <div class="action-icon">💸</div>
+
+                    <h3>Withdraw Money</h3>
+
+                    <input
+                        type="number"
+                        id="withdrawAmount"
+                        placeholder="Enter amount"
+                        min="1"
+                        step="0.01">
+
+                    <button
+                        class="withdraw-btn"
+                        onclick="withdrawMoney()">
+                        Withdraw
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div id="transactionMessage"
+                 class="message">
+            </div>
+
+
+            <!-- TRANSACTION HISTORY -->
+            <div class="transactions">
+
+                <div class="section-title">
+
+                    <h2>📜 Transaction History</h2>
+
+                    <button
+                        class="refresh-btn"
+                        onclick="loadTransactions()">
+                        🔄 Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Balance</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="transactionTable">
+
+                            <tr>
+                                <td colspan="4">
+                                    No transactions found
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ADMIN LOGIN -->
+    <section id="adminLogin" class="section">
+
+        <div class="form-container admin-login-box">
+
+            <div class="admin-icon">
+                👨‍💼
+            </div>
+
+            <h2>Admin Login</h2>
+
+            <p class="form-subtitle">
+                Enter Admin ID and Admin PIN.
+            </p>
+
+            <form id="adminLoginForm">
+
+                <label>Admin ID</label>
+
+                <input
+                    type="text"
+                    id="adminId"
+                    placeholder="Enter Admin ID"
+                    required>
+
+
+                <label>Admin PIN</label>
+
+                <input
+                    type="password"
+                    id="adminPin"
+                    placeholder="Enter Admin PIN"
+                    required>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn full-btn">
+                    Admin Login
+                </button>
+
+            </form>
+
+            <div id="adminMessage" class="message"></div>
+
+            <p class="admin-note">
+                Demo Admin ID: admin
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="adminDashboard" class="section">
+
+        <div class="admin-container">
+
+            <div class="dashboard-header">
+
+                <div>
+                    <h2>👨‍💼 Admin Dashboard</h2>
+                    <p>Bank Management Control Panel</p>
+                </div>
+
+                <button
+                    class="logout-btn"
+                    onclick="adminLogout()">
+                    Logout
+                </button>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">👥</div>
+
+                    <div>
+                        <p>Total Customers</p>
+                        <h2>
+                            <span id="totalCustomers">0</span> / 50
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">💰</div>
+
+                    <div>
+                        <p>Total Bank Balance</p>
+                        <h2>
+                            ₹ <span id="totalBalance">0.00</span>
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">🏦</div>
+
+                    <div>
+                        <p>Account Capacity</p>
+                        <h2>50</h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CUSTOMERS -->
+            <div class="admin-table-card">
+
+                <div class="section-title">
+
+                    <h2>👥 All Customers</h2>
+
+                    <button
+                        class="refresh-btn"
+                        onclick="loadCustomers()">
+                        🔄 Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Account Number</th>
+                                <th>Name</th>
+                                <th>Mobile</th>
+                                <th>Balance</th>
+                                <th>Created Date</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="customerTable">
+
+                            <tr>
+                                <td colspan="5">
+                                    No customers found
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            © 2026 MyBank | Bank Management System
+        </p>
+
+        <p>
+            College Project
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
